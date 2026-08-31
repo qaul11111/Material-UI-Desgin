@@ -1,0 +1,4 @@
+interface:
+  display_name: "Material Android UI Refine"
+  short_description: "Audit and refine existing Android UI designs against Material 3."
+  default_prompt: "Use $material-android-ui-refine to audit and refine this Android UI design against Material 3."

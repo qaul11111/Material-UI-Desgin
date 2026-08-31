@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.1",
+  "meta": {
+    "product": "Example Product",
+    "feature": "Sign in",
+    "revision": "design-r1",
+    "sourcePrototype": "prototype/sign-in",
+    "sourceDesign": "design/sign-in",
+    "materialSnapshot": "2026-08-26",
+    "materialFlavor": "baseline",
+    "frameworkPins": {
+      "composeMaterial3": "repository pin required before implementation",
+      "composeAdaptive": "repository pin required before implementation",
+      "flutter": "repository pin required before implementation",
+      "webviewFlutter": "repository pin required when WebView is in scope"
+    },
+    "owners": ["Product", "Design"],
+    "decisions": [
+      {
+        "id": "theme-seed",
+        "question": "Which primary seed color should the product use?",
+        "answer": "#6750A4",
+        "approvedBy": "Product"
+      }
+    ],
+    "assumptions": []
+  },
+  "targets": {
+    "platforms": ["compose", "flutter"],
+    "minAndroidApi": 24,
+    "targetAndroidApi": 36,
+    "locales": ["zh-CN", "en-US"],
+    "rtl": false,
+    "windowClasses": ["compact", "medium", "expanded"],
+    "canonicalViewports": [
+      { "id": "compact-360x800", "widthDp": 360, "heightDp": 800, "pixelRatio": 3, "windowClass": "compact" },
+      { "id": "medium-700x900", "widthDp": 700, "heightDp": 900, "pixelRatio": 2, "windowClass": "medium" },
+      { "id": "expanded-1000x900", "widthDp": 1000, "heightDp": 900, "pixelRatio": 2, "windowClass": "expanded" }
+    ],
+    "fontScales": [1, 1.3],
+    "themeModes": ["light", "dark"]
+  },
+  "theme": {
+    "color": { "source": "static seed #6750A4", "tokens": { "primary": "#6750A4" } },
+    "typography": { "source": "Material 3 baseline", "tokens": { "bodyLarge": "16sp/24sp" } },
+    "spacing": { "source": "Project-owned 8dp/4dp spacing ladder", "tokens": { "screenCompact": 16 } },
+    "shape": { "source": "Material shape scale", "tokens": { "medium": 12 } },
+    "elevation": { "source": "Material elevation scale", "tokens": { "level0": 0 } },
+    "motion": { "source": "Material standard motion", "tokens": { "scheme": "standard" } },
+    "icons": { "source": "Material Symbols Rounded", "tokens": { "defaultSize": 24 } }
+  },
+  "screens": [
+    {
+      "id": "screen-sign-in",
+      "name": "Sign in",
+      "route": "/sign-in",
+      "variants": [
+        {
+          "id": "sign-in-compact-light-content-zh",
+          "viewportId": "compact-360x800",
+          "themeMode": "light",
+          "locale": "zh-CN",
+          "fontScale": 1,
+          "uiState": "content",
+          "reference": "exports/sign-in-compact-light-content-zh.png"
+        }
+      ],
+      "adaptiveRules": { "compact": "one centered form column", "medium": "capped form with supporting art", "expanded": "40/60 split" },
+      "insets": { "systemBars": "safe", "ime": "resize and keep focused field visible" },
+      "focusOrder": ["email", "password", "submit"],
+      "scrollBehavior": "scroll when height or font scale requires it",
+      "componentIds": ["field-email", "field-password", "button-submit"]
+    }
+  ],
+  "components": [
+    {
+      "id": "button-submit",
+      "materialComponent": "FilledButton",
+      "variant": "filled",
+      "size": "baseline-default-40dp",
+      "reuseKey": "PrimaryActionButton",
+      "tokenOverrides": {},
+      "contentRules": { "labelKey": "sign_in_action" },
+      "states": ["enabled", "pressed", "focused", "loading", "disabled"],
+      "semantics": { "role": "button", "labelKey": "sign_in_action" },
+      "dataBindings": ["isSubmitting"]
+    }
+  ],
+  "interactions": [
+    {
+      "id": "submit-sign-in",
+      "trigger": "activate button-submit",
+      "source": "content",
+      "destination": "loading",
+      "event": "SubmitSignIn",
+      "motion": { "token": "fast effects" },
+      "reducedMotion": { "behavior": "immediate state replacement" }
+    }
+  ],
+  "assets": [],
+  "dataContract": {
+    "uiState": [
+      { "name": "email", "type": "String", "description": "Current email input" },
+      { "name": "isSubmitting", "type": "Boolean", "description": "Shows progress and prevents duplicate submit" }
+    ],
+    "events": [
+      { "name": "SubmitSignIn", "type": "event", "description": "Request sign in through an injected application boundary" }
+    ],
+    "fixtures": [
+      { "id": "sign-in-content", "uiState": "content", "data": { "email": "", "isSubmitting": false } }
+    ],
+    "unknowns": ["Authentication endpoint and credential-storage policy are intentionally not inferred from UI"]
+  },
+  "deviations": [],
+  "verification": {
+    "pixelMatchThreshold": 0.99,
+    "channelTolerance": 8,
+    "geometryToleranceDp": 1,
+    "configurations": [
+      {
+        "id": "verify-sign-in-compact-light-content-zh",
+        "screenId": "screen-sign-in",
+        "variantId": "sign-in-compact-light-content-zh",
+        "status": "planned",
+        "reference": "exports/sign-in-compact-light-content-zh.png",
+        "actual": null,
+        "score": null
+      }
+    ],
+    "masks": [],
+    "accessibilityGates": ["48dp touch targets", "4.5:1 small-text and 3:1 large-text/non-text contrast", "TalkBack labels and order", "large text no clipping"],
+    "evidence": []
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Material Android UI Design"
+  short_description: "Create complete Material 3 Android UI from product prototypes."
+  default_prompt: "Use $material-android-ui-design to turn this product prototype into a complete Material 3 Android UI design."

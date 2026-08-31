@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/material-ui-contract.schema.json",
+  "title": "Material Android UI handoff contract",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "meta",
+    "targets",
+    "theme",
+    "screens",
+    "components",
+    "interactions",
+    "assets",
+    "dataContract",
+    "deviations",
+    "verification"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "1.1" },
+    "meta": {
+      "type": "object",
+      "required": ["product", "feature", "revision", "materialSnapshot", "materialFlavor", "frameworkPins", "decisions"],
+      "properties": {
+        "product": { "type": "string", "minLength": 1 },
+        "feature": { "type": "string", "minLength": 1 },
+        "revision": { "type": "string", "minLength": 1 },
+        "sourcePrototype": { "type": ["string", "null"] },
+        "sourceDesign": { "type": ["string", "null"] },
+        "materialSnapshot": { "type": "string", "format": "date" },
+        "materialFlavor": { "enum": ["baseline", "expressive"] },
+        "frameworkPins": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Repository-pinned or explicitly unpinned framework/library versions used to interpret component defaults.",
+          "additionalProperties": { "type": ["string", "null"] }
+        },
+        "owners": { "type": "array", "items": { "type": "string" } },
+        "decisions": { "type": "array", "items": { "$ref": "#/$defs/decision" } },
+        "assumptions": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "targets": {
+      "type": "object",
+      "required": ["platforms", "locales", "rtl", "windowClasses", "canonicalViewports", "fontScales", "themeModes"],
+      "properties": {
+        "platforms": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["compose", "flutter", "webview"] } },
+        "minAndroidApi": { "type": ["integer", "null"], "minimum": 1 },
+        "targetAndroidApi": { "type": ["integer", "null"], "minimum": 1 },
+        "locales": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rtl": { "type": "boolean" },
+        "windowClasses": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["compact", "medium", "expanded", "large", "extra-large"] } },
+        "canonicalViewports": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/viewport" } },
+        "fontScales": { "type": "array", "minItems": 1, "items": { "type": "number", "minimum": 0.5 } },
+        "themeModes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["light", "dark", "system"] } }
+      },
+      "additionalProperties": true
+    },
+    "theme": {
+      "type": "object",
+      "required": ["color", "typography", "spacing", "shape", "elevation", "motion", "icons"],
+      "properties": {
+        "color": { "$ref": "#/$defs/tokenSection" },
+        "typography": { "$ref": "#/$defs/tokenSection" },
+        "spacing": { "$ref": "#/$defs/tokenSection" },
+        "shape": { "$ref": "#/$defs/tokenSection" },
+        "elevation": { "$ref": "#/$defs/tokenSection" },
+        "motion": { "$ref": "#/$defs/tokenSection" },
+        "icons": { "$ref": "#/$defs/tokenSection" }
+      },
+      "additionalProperties": true
+    },
+    "screens": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/screen" } },
+    "components": { "type": "array", "items": { "$ref": "#/$defs/component" } },
+    "interactions": { "type": "array", "items": { "$ref": "#/$defs/interaction" } },
+    "assets": { "type": "array", "items": { "$ref": "#/$defs/asset" } },
+    "dataContract": {
+      "type": "object",
+      "required": ["uiState", "events", "fixtures"],
+      "properties": {
+        "uiState": { "type": "array", "items": { "$ref": "#/$defs/namedValue" } },
+        "events": { "type": "array", "items": { "$ref": "#/$defs/namedValue" } },
+        "fixtures": { "type": "array", "items": { "$ref": "#/$defs/fixture" } },
+        "unknowns": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "deviations": { "type": "array", "items": { "$ref": "#/$defs/deviation" } },
+    "verification": {
+      "type": "object",
+      "required": ["pixelMatchThreshold", "channelTolerance", "geometryToleranceDp", "configurations", "accessibilityGates"],
+      "properties": {
+        "pixelMatchThreshold": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.99 },
+        "channelTolerance": { "type": "integer", "minimum": 0, "maximum": 255, "default": 8 },
+        "geometryToleranceDp": { "type": "number", "minimum": 0, "default": 1 },
+        "configurations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/configuration" } },
+        "masks": { "type": "array", "items": { "$ref": "#/$defs/mask" } },
+        "accessibilityGates": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "decision": {
+      "type": "object",
+      "required": ["id", "question", "answer"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "question": { "type": "string", "minLength": 1 },
+        "answer": {},
+        "approvedBy": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "viewport": {
+      "type": "object",
+      "required": ["id", "widthDp", "heightDp", "pixelRatio", "windowClass"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "widthDp": { "type": "number", "exclusiveMinimum": 0 },
+        "heightDp": { "type": "number", "exclusiveMinimum": 0 },
+        "pixelRatio": { "type": "number", "exclusiveMinimum": 0 },
+        "windowClass": { "enum": ["compact", "medium", "expanded", "large", "extra-large"] }
+      },
+      "additionalProperties": true
+    },
+    "tokenSection": {
+      "type": "object",
+      "required": ["source", "tokens"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "tokens": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "variant": {
+      "type": "object",
+      "required": ["id", "viewportId", "themeMode", "locale", "fontScale", "uiState", "reference"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "viewportId": { "type": "string", "minLength": 1 },
+        "themeMode": { "enum": ["light", "dark", "system"] },
+        "locale": { "type": "string", "minLength": 1 },
+        "fontScale": { "type": "number", "minimum": 0.5 },
+        "uiState": { "type": "string", "minLength": 1 },
+        "reference": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "screen": {
+      "type": "object",
+      "required": ["id", "name", "route", "variants", "adaptiveRules", "insets", "focusOrder"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "route": { "type": "string" },
+        "variants": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/variant" } },
+        "adaptiveRules": { "type": "object" },
+        "insets": { "type": "object" },
+        "focusOrder": { "type": "array", "items": { "type": "string" } },
+        "scrollBehavior": { "type": "string" },
+        "componentIds": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "component": {
+      "type": "object",
+      "required": ["id", "materialComponent", "variant", "reuseKey", "states", "semantics"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "materialComponent": { "type": "string", "minLength": 1 },
+        "variant": { "type": "string", "minLength": 1 },
+        "size": { "type": ["string", "null"] },
+        "reuseKey": { "type": "string", "minLength": 1 },
+        "tokenOverrides": { "type": "object" },
+        "contentRules": { "type": "object" },
+        "states": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "semantics": { "type": "object" },
+        "dataBindings": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "interaction": {
+      "type": "object",
+      "required": ["id", "trigger", "source", "destination", "event", "motion", "reducedMotion"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "trigger": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "minLength": 1 },
+        "destination": { "type": "string", "minLength": 1 },
+        "event": { "type": "string", "minLength": 1 },
+        "motion": { "type": "object" },
+        "reducedMotion": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "asset": {
+      "type": "object",
+      "required": ["id", "kind", "source", "license", "variants", "destinationHint"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["image", "icon", "animation", "audio", "video", "font", "web"] },
+        "source": { "type": "string" },
+        "license": { "type": "string" },
+        "variants": { "type": "array", "items": { "type": "object" } },
+        "altText": { "type": ["string", "null"] },
+        "destinationHint": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "namedValue": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "fixture": {
+      "type": "object",
+      "required": ["id", "uiState", "data"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "uiState": { "type": "string", "minLength": 1 },
+        "data": {}
+      },
+      "additionalProperties": true
+    },
+    "deviation": {
+      "type": "object",
+      "required": ["id", "rule", "reason", "alternatives", "approvedBy", "impact", "tests", "reReviewTrigger"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "rule": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "alternatives": { "type": "array", "items": { "type": "string" } },
+        "approvedBy": { "type": ["string", "null"] },
+        "impact": { "type": "string" },
+        "tests": { "type": "array", "items": { "type": "string" } },
+        "reReviewTrigger": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "configuration": {
+      "type": "object",
+      "required": ["id", "screenId", "variantId", "status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "screenId": { "type": "string", "minLength": 1 },
+        "variantId": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["planned", "passed", "failed", "blocked"] },
+        "reference": { "type": ["string", "null"] },
+        "actual": { "type": ["string", "null"] },
+        "score": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "mask": {
+      "type": "object",
+      "required": ["path", "reason", "excludedAreaRatio"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "excludedAreaRatio": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
