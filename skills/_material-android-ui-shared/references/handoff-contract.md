@@ -1,6 +1,14 @@
 # Design-to-code handoff contract
 
-The suite uses `material-ui-contract.json` as the continuity artifact. The design skill creates it, the refinement skill updates it, and either implementation skill consumes it. Validate it against `../schemas/material-ui-contract.schema.json` when a JSON Schema validator is available.
+The suite uses `material-ui-contract.json` as the continuity artifact. The design skill creates it, the refinement skill updates it, and either implementation skill consumes it. Validate with `../scripts/validate_contract.py`; see [QA commands](qa-tools.md). Missing tooling is a reported incomplete check, not a silent pass.
+
+Schema 1.1 now accepts optional structured `meta.visualDirection` without invalidating legacy contracts. Drafts without it still validate; new complete deliveries require recorded direction and representative-screen evidence through delivery-mode checks. Legacy designs can record an inherited direction from the approved source instead of reopening brand approval. See [visual-direction.md](visual-direction.md).
+
+## When this contract is required
+
+Use the full contract for structured development handoff, or update it when an existing handoff is affected. Visual exploration can use a concise brief and visual study without constructing schema-complete JSON. A small source correction without an existing contract needs scoped measurements and before/after evidence, not a new product-wide handoff.
+
+Draft validation still requires schema-valid JSON; it is not a validator for arbitrary partial concept notes. Delivery validation is reserved for a claimed development handoff. A completed concept is not a failed delivery, and a successful draft check is not evidence of development readiness. Link the selected visual study and genuine revision evidence through `verification.evidence` when handing off; do not invent human approval or passed test records.
 
 ## Ownership and lifecycle
 

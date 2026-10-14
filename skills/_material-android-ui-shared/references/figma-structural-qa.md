@@ -44,7 +44,9 @@ overflowRight  = max(0, maxChildRight - container.width)
 overflowBottom = max(0, maxChildBottom - container.height)
 ```
 
-Both overflow values must be zero unless the clip is intentional and documented.
+For transformed children, transform all four local corners using relativeTransform and compare their extrema in the parent's coordinate system, including left/top. The simple formula above is only for untransformed children. Evaluate visible descendants; shadow/render bounds differ from layout bounds.
+
+Unintended overflow must be zero within the declared rounding tolerance (the helper defaults to 0.5 logical pixel, maximum 1). Never increase tolerance to conceal a visible defect.
 
 ## Repair order
 
@@ -69,3 +71,15 @@ Store the following in `06 Handoff & QA` or the external handoff report:
 - section and full-page screenshots from the final state;
 - documented intentional clips;
 - icon-source mapping and any approved deviations.
+
+## Executable workflow
+
+Read [qa-tools.md](qa-tools.md) for commands and limits.
+
+1. After the final mutation, load the shared scripts/collect_figma_snapshot.js in the available Figma Plugin API execution tool. Follow that tool's installed skill/API instructions. Supply explicit disjoint rootIds and the current contract revision; do not scan unrelated pages.
+2. Save the complete snapshot. The collector does not export screenshots; capture final section/root screenshots separately.
+3. Run scripts/audit_figma_snapshot.py with the snapshot, contract and scoped configuration. Classify functional icon slots explicitly; circles alone cannot determine semantics.
+4. Resolve failures and review findings. Exact node/rule exceptions need a reason, approver and re-review trigger and remain in the report.
+5. Recollect after any fix, then validate the contract and artifact index.
+
+These helpers do not auto-edit or judge aesthetics. If live Figma is unavailable, mark collection/visual acceptance not run. Never present mock snapshots or prepared fixtures as live design evidence.

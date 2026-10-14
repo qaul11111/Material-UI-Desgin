@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>销售流程 · 脱敏低保真测试原型</title>
+<style>
+  body {font: 16px/1.5 sans-serif; max-width: 420px; margin: 24px auto; padding: 16px}
+  section {border: 1px solid #999; padding: 16px; margin-block: 16px}
+  button {padding: 12px; margin: 4px}
+  .placeholder {display: inline-block; width: 20px; height: 20px; background: #222; border-radius: 50%}
+  .presence {display: inline-block; width: 8px; height: 8px; background: green; border-radius: 50%}
+</style>
+<header><strong>示例销售助手</strong><button aria-label="通知"><span class="placeholder"></span></button></header>
+<main>
+  <h1>下一步跟进</h1>
+  <section>
+    <h2>新线索已识别</h2>
+    <p>示例联系人 · 示例公司</p>
+    <p>咨询企业方案，预计 30 席位。</p>
+    <button onclick="document.getElementById('match').hidden=false">匹配客户身份</button>
+  </section>
+  <section id="match" hidden>
+    <h2>客户身份匹配</h2>
+    <p>138 **** 0000 · 示例公司</p>
+    <p><span class="presence" role="img" aria-label="在线"></span> 当前在线</p>
+    <button onclick="document.getElementById('assignment').hidden=false">查看建议分配</button>
+  </section>
+  <section id="assignment" hidden>
+    <h2>建议分配</h2>
+    <p>基于区域与行业推荐示例团队；需要人工确认。</p>
+    <button onclick="document.getElementById('call').hidden=false">确认并准备通话</button>
+  </section>
+  <section id="call" hidden>
+    <h2>通话前准备</h2>
+    <p>优先确认上线时间与采购流程，不虚构报价承诺。</p>
+    <button onclick="document.getElementById('review').hidden=false">模拟通话结束</button>
+  </section>
+  <section id="review" hidden>
+    <h2>跟进草稿</h2>
+    <textarea aria-label="可编辑跟进摘要">客户关注上线周期；下次确认决策时间。</textarea>
+    <button onclick="document.getElementById('saved').hidden=false">确认后写入</button>
+    <p id="saved" role="status" hidden>演示保存成功；没有调用真实接口。</p>
+  </section>
+</main>
+<nav aria-label="主导航">
+  <button><span class="placeholder"></span>客户</button>
+  <button><span class="placeholder"></span>通话</button>
+  <button><span class="placeholder"></span>经营</button>
+</nav>
+<footer>基于原销售流程重建的脱敏测试输入，不是最终 UI 或真实 Figma 导出。</footer>
+</html>

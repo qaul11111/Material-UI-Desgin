@@ -23,7 +23,31 @@
         "approvedBy": "Product"
       }
     ],
-    "assumptions": []
+    "assumptions": ["Draft example only: exports, complete tokens and target coverage are not delivered."],
+    "visualDirection": {
+      "thesis": "A calm, direct sign-in experience that makes the next action clear",
+      "emphasis": ["Account access", "Credentials", "Submit"],
+      "containment": "One form group on a quiet surface; do not wrap each field in a card",
+      "imagery": "No decorative image on the compact form; supporting brand art is optional at wider widths",
+      "signature": "Clear type hierarchy and restrained accent use",
+      "status": "proposed",
+      "approvedBy": null,
+      "approvalEvidence": null,
+      "sourceRevision": "design-r1",
+      "representativeExports": ["exports/sign-in-compact-light-content-zh.png"],
+      "iconProfile": {
+        "family": "Material Symbols Rounded",
+        "source": "https://fonts.google.com/icons",
+        "axes": {"wght": 400, "GRAD": 0, "opsz": 24, "FILL": 0},
+        "statePolicy": "Use consistent family; fill may distinguish selection where meaningful"
+      },
+      "fontProfile": {
+        "roles": {"body": "Android system sans", "display": "Android system sans"},
+        "fallbacks": {"zh-CN": ["System CJK sans"], "en-US": ["sans-serif"]},
+        "assetIds": [],
+        "deliveryNote": "System fonts are not bundled; verify exact Figma/runtime fonts before delivery"
+      }
+    }
   },
   "targets": {
     "platforms": ["compose", "flutter"],
@@ -74,6 +98,24 @@
   ],
   "components": [
     {
+      "id": "field-email",
+      "materialComponent": "OutlinedTextField",
+      "variant": "outlined",
+      "reuseKey": "CredentialField",
+      "states": ["enabled", "focused", "error", "disabled"],
+      "semantics": {"role": "textbox", "labelKey": "email"},
+      "dataBindings": ["email"]
+    },
+    {
+      "id": "field-password",
+      "materialComponent": "OutlinedTextField",
+      "variant": "password",
+      "reuseKey": "CredentialField",
+      "states": ["enabled", "focused", "error", "disabled"],
+      "semantics": {"role": "textbox", "labelKey": "password", "sensitive": true},
+      "dataBindings": ["password"]
+    },
+    {
       "id": "button-submit",
       "materialComponent": "FilledButton",
       "variant": "filled",
@@ -100,6 +142,7 @@
   "assets": [],
   "dataContract": {
     "uiState": [
+      { "name": "password", "type": "String", "description": "Ephemeral credential input; never real data in fixtures" },
       { "name": "email", "type": "String", "description": "Current email input" },
       { "name": "isSubmitting", "type": "Boolean", "description": "Shows progress and prevents duplicate submit" }
     ],

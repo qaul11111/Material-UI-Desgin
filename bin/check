@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+node --test tests/collector.test.js
+python3 skills/_material-android-ui-shared/scripts/validate_contract.py \
+  skills/_material-android-ui-shared/examples/material-ui-contract.example.json

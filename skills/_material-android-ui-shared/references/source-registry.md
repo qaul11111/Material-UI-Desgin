@@ -53,6 +53,20 @@ Research snapshot: 2026-08-26. Recheck unstable framework APIs, component tokens
 - `webview_flutter`: https://pub.dev/packages/webview_flutter
 - `webview_flutter_android`: https://pub.dev/packages/webview_flutter_android
 
-## Source-use rule
+## Visual expression and QA supplement — verified 2026-09-04
+
+- Expressive/attention research: https://design.google/library/expressive-material-design-google-research
+- Quiet and energetic expression: https://design.google/library/design-notes-material-3-expressive-liam-spradlin
+- Brand typography: https://developer.android.com/codelabs/m3-design-theming
+- Fonts and script fallback: https://m3.material.io/styles/typography/fonts
+- Editorial treatments: https://m3.material.io/styles/typography/editorial-treatments
+- Icon styles: https://m3.material.io/styles/icons/overview
+- Custom icon consistency: https://m3.material.io/styles/icons/designing-icons
+- Symbol axes/assets: https://developers.google.com/fonts/docs/material_symbols
+- Figma collector API: https://developers.figma.com/docs/plugins/api/FrameNode/ and https://developers.figma.com/docs/plugins/api/TextNode/
+
+The Material font/editorial/icon pages were read in a JavaScript-capable browser because plain extraction returned a JavaScript-required shell. This supplement does not refresh every historical framework metric. Do not use stale platform-availability statements on a Symbols page as dependency advice.
+
+## Source-use rule (all references)
 
 When a task needs an exact component metric not already pinned in the target project, open the relevant official component page and inspect the framework implementation for the pinned version. Do not use third-party summaries as normative evidence. Record the source URL, access date, framework version, and whether the value is a baseline, Expressive variant, or project override.

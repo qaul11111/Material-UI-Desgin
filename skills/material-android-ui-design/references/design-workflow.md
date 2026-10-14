@@ -18,21 +18,19 @@ The source may be runnable HTML/CSS, Figma, screenshots, sketches, video, or req
 
 ## 2. Product interview template
 
-Ask in two concise rounds when possible.
+Ask in concise product language; use the list below as a discovery checklist, not a questionnaire to recite. Explain technical choices with visual examples. Infer repository facts and preserve previously approved answers.
 
-Round A — required direction:
+For a new direction, resolve only missing high-impact choices. Possible prompts:
 
 - “What primary brand/seed color should we use? Provide hex/design token, or authorize three proposals.”
-- “Static brand, Android dynamic color, or hybrid? If dynamic, which approved static scheme is the API <31 fallback? Light, dark, or system?”
-- “Baseline Material 3 or Material 3 Expressive?”
-- “Choose 3–5 adjectives, for example calm, precise, professional, warm, playful, editorial, technical, premium.”
-- “Comfortable, standard, or compact density? Soft/rounded, balanced, or geometric shape?”
-- “Subtle, standard, or lively motion? Any motion sensitivity requirement?”
+- “Should the brand color stay recognizable, or may supported Android devices personalize it?”
+- “What should using this product feel like? Here are two relevant visual references.”
+- “Which parts of these references fit your users, and what should we avoid?”
 - “Share references you like and anything we must avoid.”
 
-Before presenting style directions, precheck every owner-supplied seed/brand color in the proposed light and dark role mapping. If it cannot satisfy required contrast in a usable scheme, show the measured failure and offer accessible role/seed alternatives; do not carry an invalid seed into visual exploration as if it were approved.
+Before presenting style directions, precheck actual foreground/background role pairs in light and dark. A seed is not itself an inaccessible UI pair: keep the supplied brand seed while deriving usable tones and roles. If the owner requires that exact hex for a particular control and contrast fails, show the measured pair and offer role/foreground alternatives.
 
-Round B — product constraints:
+Discover product constraints from the prototype/repository first:
 
 - users/tasks and success criteria;
 - screen/flow boundary and required states;
@@ -41,26 +39,32 @@ Round B — product constraints:
 - locales/RTL/accessibility/compliance;
 - locked brand/content/technical constraints.
 
-If the owner authorizes defaults, record each one. Safe starting proposal: baseline Material 3, static accessible seed derived from brand, light+dark/system, standard density, balanced shape, standard/subtle motion, compact+medium+expanded layouts, and no custom component unless needed. If a blocking answer remains unavailable, make one explicit provisional proposal, record its owner and deadline, and mark affected output blocked; do not silently decide product identity, compliance, security, or irreversible behavior.
+When the owner delegates defaults, recommend a coherent direction from the product task, references and brand assets; explain why. Do not treat baseline Material, neutral surfaces, balanced shapes or a particular icon/font family as a universal aesthetic default. Preserve the requested seed, logo and frozen identity. Record the derived color strategy, target scope and provisional choices without expanding device/theme scope silently. A genuinely unresolved choice blocks only dependent finalization; work on authorized inspection and exploratory screens can continue. Do not invent deadlines, business rules or human approval.
 
 ## 3. Style directions
 
-Use one representative high-information screen and the same real content for all directions. Each direction contains:
+Read `../../_material-android-ui-shared/references/visual-direction.md`. Start from a product-specific visual thesis and attention hierarchy, not a catalog of equally prominent containers. Treat the chosen hero/composition as a hypothesis to test, not an obligation for every screen.
 
-- semantic light/dark palette and contrast sample;
+Inspect relevant supplied references as actual images/screens. If none is useful and reference discovery is in scope, inspect a small set of appropriate examples; do not require a moodboard for a familiar brand or tiny edit. Record the visible observation, transferable treatment, product-specific adaptation and resulting screen location as described in the shared reference.
+
+Use a representative screen with meaningful content and a key task. Use the same real content for candidate directions. Show the choices in the screen itself:
+
+- working semantic palette and contrast of displayed foreground/background pairs;
 - typography hierarchy and emphasized-role policy;
 - shape, spacing/density, icon, illustration/photo treatment;
-- primary button, field, card/list, navigation, feedback state;
-- one short interaction/motion sample;
+- the controls and feedback that actually occur on that screen;
+- a short motion sample when interaction is consequential to the direction;
 - one-paragraph rationale and engineering risk.
 
 Name directions by intent, not vague colors. Examples: “Quiet Precision,” “Warm Guidance,” “Expressive Momentum.” Make selection explicit in contract decisions.
 
-Keep exploration bounded: normally present 2–3 directions, allow at most two comparison/refinement rounds, and ask for selection against the agreed adjectives and constraints. If all are rejected twice, return to the style brief and resolve the conflicting preferences before producing more variants.
+Normally compare two directions when the choice is unresolved. They should test meaningfully different composition, typography, containment or image treatments while preserving product information and actions. Do not pad a comparison with weak alternatives or force every variable to differ. Recommend based on the observed screens and task. After repeated rejection, resolve the conflicting preference before generating further variants. If the owner delegated the choice, select and continue within that authority.
+
+When direction is already clear, produce one representative screen. Include real primary-language/Latin/numeric content, normal icons, a content-heavy region and a key action. Inspect the rendered result, fix consequential visual weaknesses, and re-render changed work. Before promoting the direction to a reusable system, test in-scope dark and enlarged-text behavior and content extremes. Record exact samples, critique, selection and scope in the visual study, then carry them into `meta.visualDirection` for handoff. Do not block a narrowly scoped correction on a new full-screen style review.
 
 ## 4. Information and state design
 
-Create a route/flow map and a screen-state table before visual polish. For every action answer:
+Before polishing a representative screen, understand its task, important content and reachable actions. Record unresolved states without inventing behavior. Complete the in-scope route/flow map and screen-state table during system expansion and handoff. For every delivered action answer:
 
 - Who can use it and when?
 - What immediate feedback appears?
@@ -73,11 +77,13 @@ Do not visually disable actions merely to hide missing product rules. Resolve th
 
 ## 5. System construction
 
+Expand the system after representative-screen selection. Keep a working subset of tokens while exploring. Do not build all catalog components, all 30 text roles as visible specimens, or a large Foundations page before the product's visual direction is established; document the roles required by the delivery scope without treating the specimen gallery as the product.
+
 Build in dependency order:
 
 1. source/brand color and static/dynamic strategy;
 2. semantic light/dark roles and contrast evidence;
-3. type families, weights, all 15 baseline roles, optional emphasized roles, script fallback;
+3. type families and weights, used roles during exploration, complete baseline role mapping for handoff, optional emphasized roles and script coverage;
 4. spacing, shape, elevation, icon, motion tokens;
 5. foundational controls and state variants;
 6. compound components and navigation;
@@ -98,9 +104,9 @@ Complete an explicit icon-source pass before screen polish:
 
 ## 6. Adaptive screen specification
 
-For each route specify:
+For each delivered route and its agreed target scope specify:
 
-- compact, medium, expanded, and in-scope large/extra-large compositions;
+- the in-scope compact, medium, expanded and large/extra-large compositions;
 - navigation transformation, pane count/ratio, max readable width, gutters, and alignment anchors;
 - persistent selection/state across transformations;
 - compact-height/landscape fallback;
@@ -143,8 +149,18 @@ handoff/
 
 Export at contract dimensions with deterministic content. Keep source IDs and export filenames aligned.
 
-If no editable design tool is available, the minimum viable handoff is still non-negotiable: semantic token JSON, annotated exact-size exports, screen-state and adaptive matrices, categorized assets, interaction/reduced-motion notes, and the validated contract. A folder of screenshots alone is not a design system.
+For a development handoff without an editable design tool, provide semantic token JSON, annotated exact-size exports, screen-state and adaptive matrices, categorized assets, interaction/reduced-motion notes and the validated contract. Report the unavailable editable source; screenshots do not constitute a complete editable design system. Exploration only needs its stage evidence below.
 
-## 8. Design definition of done
+## 8. Stage evidence and completion
 
-The design is done only when token completeness, component inventory, reachable states, adaptive branches, realistic content, localization/RTL scope, accessibility semantics/order, interactions/reduced motion, assets/licenses, exports, contract validation, and approved deviations are all reviewable by someone who did not create the design. For Figma output, completion additionally requires normal vector/component icons instead of placeholders, zero unintended child-bound overflow, no clipped text/cards, consistent tokenized section gaps, and section-level plus full-page screenshots after the final mutation.
+Infer the requested endpoint; these stages organize work, not extra questions or approval ceremonies.
+
+| Stage | Reviewable result | Checks and honest limits |
+|---|---|---|
+| Exploration | Real-content representative image(s), source/reference observations, working type/icon/color treatment, recommendation and concise visual critique | Inspect actual rendered hierarchy, legibility, displayed contrast pairs, assets/icons and unintended clipping. Mark provisional assets and untested targets. No full schema/catalog requirement. |
+| Confirmed design | Selected/delegated direction, editable in-scope screens, working tokens/components and relevant alternate views | Apply feedback, retain before/after evidence for revisions, test content extremes and supported dark/enlarged-text behavior before system expansion. Record who selected or delegated; remaining handoff work stays visible. |
+| Development handoff | Complete in-scope tokens, component/state/adaptive/interaction specifications, editable source, licensed assets, exports and validated contract | All agreed configurations and Material/accessibility/structural gates have evidence; unresolved required work prevents a full-readiness claim. |
+
+A request for the full UI continues through handoff unless a real decision/tool limitation prevents it. A request for concepts can finish at exploration without being called a failed handoff. Small changes update existing records and affected instances only.
+
+For any Figma output, inspect changed sections and their roots for unintended child overflow, clipped text/cards, overlapping sections and placeholder functional icons. Keep intentional scroll/media crops distinct from defects. At full handoff, all required checks must be reviewable by someone who did not create the design.

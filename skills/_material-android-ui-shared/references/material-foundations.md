@@ -6,7 +6,7 @@ Snapshot: 2026-08-26. Treat this file as a design baseline, not a substitute for
 
 1. Identify the target Material library, framework version, Android API range, and whether experimental APIs are allowed.
 2. Use the common Material 3 baseline for cross-platform parity.
-3. Add Material 3 Expressive only when the product selects it and the target framework supports the needed tokens/components. Newer Jetpack Compose Material 3 versions expose motion schemes, but the API is absent from some stable pins; Flutter exposes duration/easing primitives, not Material's spring-physics scheme. Record and check the pinned version before selecting either path.
+3. Distinguish expressive art direction from version-specific Expressive APIs. Brand typography, imagery, visual hierarchy and deliberate containment do not automatically require experimental components. Use version-specific components/motion only when the product chooses them and the pinned platform supports them; otherwise document a supported equivalent or unresolved implementation constraint.
 4. Never silently mix legacy Material 2 metrics, baseline Material 3, and Expressive variants. Put intentional exceptions in `deviations`.
 5. Preserve semantic token names in design and code. Do not replace roles with raw hex, dp, or sp values inside screens.
 
@@ -38,6 +38,8 @@ Choose one color strategy during intake:
 Contrast is a release criterion, not a palette-generation assumption: text smaller than 18 sp, or bold text smaller than 14 sp, is at least 4.5:1; all larger text is at least 3:1; meaningful non-text boundaries/icons are at least 3:1. Check every interactive state and both themes.
 
 ## Typography
+
+The default font is a fallback, not a requirement that every product use the same family. Read [visual-direction.md](visual-direction.md) when choosing type and icon profiles. Preserve readable body/label roles; tokenized editorial moments may use supported custom sizes/axes rather than the baseline table. Verify actual CJK fallback and mixed-script line metrics.
 
 Use `sp` on Android and logical pixels with text scaling in Flutter. Never encode a font size as fixed physical pixels. Material uses the platform default sans (`FontFamily.SansSerif`, normally Roboto on Android); a brand family must cover all required scripts and weights and must be licensed and bundled correctly.
 
